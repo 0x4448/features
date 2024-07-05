@@ -24,3 +24,8 @@ repos:
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
+
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: d0bcdb35c6999a4a120b528f050d2b11778fd3d0 # v0.1.23
+    hooks:
+      - id: shellcheck
