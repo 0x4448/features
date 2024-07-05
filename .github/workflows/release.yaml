@@ -27,4 +27,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate Documentation
-        uses: .github/workflows/docs.yaml
+        uses: ./.github/workflows/docs.yaml
