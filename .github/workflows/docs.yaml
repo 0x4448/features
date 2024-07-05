@@ -1,0 +1,47 @@
+name: Update Documentation
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions: { }
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate Documentation
+        uses: devcontainers/action@v1
+        with:
+          generate-docs: "true"
+          base-path-to-features: "./src"
+
+      - name: Create PR for documentation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+
+          git config --global user.email github-actions@github.com
+          git config --global user.name github-actions
+          git config pull.rebase false
+
+          branch="docs/${{ github.run_id }}"
+          git switch -c "$branch"
+          git add */**/README.md
+          git commit -m "docs: automated update [skip ci]"
+
+          git push origin "$branch"
+          message="Automated documentation update"
+          gh pr create --title "$message" --body "$message" --base main --head "$branch"
