@@ -1,4 +1,4 @@
-name: "Release Features"
+name: Release Features
 
 on:
   workflow_dispatch:
@@ -18,11 +18,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: "Publish Features"
+      - name: Publish Features
         uses: devcontainers/action@v1
         with:
           publish-features: "true"
           base-path-to-features: "./src"
-          generate-docs: "true"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Documentation
+        uses: .github/workflows/docs.yaml
