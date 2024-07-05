@@ -40,7 +40,7 @@ jobs:
           branch="docs/${{ github.run_id }}"
           git switch -c "$branch"
           git add */**/README.md
-          git commit -m "docs: automated update [skip ci]"
+          git commit -m "docs: automated update"
 
           git push origin "$branch"
           message="Automated documentation update"
