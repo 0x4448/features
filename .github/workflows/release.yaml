@@ -12,7 +12,6 @@ jobs:
 
     permissions:
       contents: write
-      pull-requests: write
       packages: write
 
     steps:
@@ -26,5 +25,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate Documentation
-        uses: ./.github/workflows/docs.yaml
+  docs:
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    uses: ./.github/workflows/docs.yml
