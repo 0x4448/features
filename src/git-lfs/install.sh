@@ -3,12 +3,12 @@ set -eu
 
 
 # Feature Options
-VERSION=${VERSION:-"stable"}
-HASH=${HASH:-"none"}
+VERSION=${VERSION:-"3.5.1"}
+HASH=${HASH:-"6f28eb19faa7a968882dca190d92adc82493378b933958d67ceaeb9ebe4d731e"}
 
 
 # Script Variables
-fileName="shellcheck.tar.xz"
+fileName="git-lfs.tar.gz"
 
 
 # Functions
@@ -17,7 +17,7 @@ install_requirements() {
   apt install --yes --no-install-recommends \
     ca-certificates \
     curl \
-    xz-utils
+    git
 }
 
 initialize_tempdir() {
@@ -27,7 +27,7 @@ initialize_tempdir() {
 }
 
 download() {
-  url="https://github.com/koalaman/shellcheck/releases/download/$VERSION/shellcheck-$VERSION.linux.$(uname -m).tar.xz"
+  url="https://github.com/git-lfs/git-lfs/releases/download/v$VERSION/git-lfs-linux-amd64-v$VERSION.tar.gz"
   curl -fsSL -o "$fileName" "$url"
   if [ "$HASH" != "none" ]; then
     echo "$HASH $fileName" | sha256sum --check
@@ -36,7 +36,7 @@ download() {
 
 install_feature() {
   tar xf "$fileName"
-  install "shellcheck-$VERSION/shellcheck" /usr/local/bin/shellcheck
+  install "git-lfs-$VERSION/git-lfs" /usr/local/bin/git-lfs
 }
 
 

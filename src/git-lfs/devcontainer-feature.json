@@ -1,0 +1,6 @@
+{
+    "name": "Git LFS",
+    "id": "git-lfs",
+    "version": "3.5.1",
+    "description": "Git extension for versioning large files"
+}
