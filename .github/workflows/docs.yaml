@@ -36,7 +36,7 @@ jobs:
 
           branch="docs/${{ github.run_id }}"
           git switch -c "$branch"
-          git add */**/README.md
+          git add ./*/**/README.md
           git commit -m "docs: automated update"
 
           git push origin "$branch"
