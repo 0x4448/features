@@ -32,4 +32,4 @@ jobs:
       contents: write
       pull-requests: write
 
-    uses: ./.github/workflows/docs.yml
+    uses: ./.github/workflows/docs.yaml
