@@ -15,9 +15,11 @@ Godot Engine - Multi-platform 2D and 3D game engine
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | version to install | string | 4.2.2 |
+| version | version to install | string | latest |
 | dotnet | use .NET version | boolean | false |
 | hash | SHA256 hash of package | string | none |
+
+# Notes
 
 If you are installing the .NET version, include the [.NET feature](https://github.com/devcontainers/features/tree/main/src/dotnet):
 
