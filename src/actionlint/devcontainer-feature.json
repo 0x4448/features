@@ -1,8 +1,8 @@
 {
-    "name": "Hadolint",
-    "id": "hadolint",
-    "version": "1.0.1",
-    "description": "Dockerfile linter, validate inline bash, written in Haskell",
+    "name": "actionlint",
+    "id": "actionlint",
+    "version": "1.0.0",
+    "description": "Static checker for GitHub Actions workflow files",
     "options": {
         "version": {
             "type": "string",

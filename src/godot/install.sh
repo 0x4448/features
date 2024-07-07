@@ -13,15 +13,6 @@ repo="godotengine/godot"
 
 
 # Functions
-install_requirements() {
-  apt update
-  apt install --yes --no-install-recommends \
-    ca-certificates \
-    curl \
-    jq \
-    unzip
-}
-
 initialize_tempdir() {
   tempDir=$(mktemp -d)
   cd "$tempDir" || exit 1
@@ -66,7 +57,6 @@ install_feature() {
 
 
 # Main
-install_requirements
 initialize_tempdir
 download
 install_feature

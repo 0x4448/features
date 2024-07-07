@@ -8,7 +8,7 @@ HASH=${HASH:-"none"}
 
 
 # Script Variables
-repo="hadolint/hadolint"
+repo="rhysd/actionlint"
 
 
 # Functions
@@ -26,8 +26,8 @@ download() {
   fi
 
   curl -s "https://api.github.com/repos/$repo/releases/$urlSuffix" |
-    jq --raw-output --arg ARCH "$(uname -m)" \
-    '.assets[] | select(.name | contains("Linux") and contains($ARCH) and (contains("sha256") | not)) | .browser_download_url' |
+    jq --raw-output \
+    '.assets[] | select(.name | contains("linux") and contains("amd64")) | .browser_download_url' |
     xargs curl -fsSL -o FILE
 
   if [ "$HASH" != "none" ]; then
@@ -36,7 +36,8 @@ download() {
 }
 
 install_feature() {
-  install FILE /usr/local/bin/hadolint
+  tar xf FILE
+  find . -type f -name actionlint -exec install {} /usr/local/bin/actionlint \;
 }
 
 
