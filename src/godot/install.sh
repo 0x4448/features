@@ -3,13 +3,13 @@ set -eu
 
 
 # Feature Options
-VERSION=${VERSION:-"4.2.2"}
+VERSION=${VERSION:-"latest"}
 DOTNET=${DOTNET:-"false"}
 HASH=${HASH:-"none"}
 
 
 # Script Variables
-fileName="godot.zip"
+repo="godotengine/godot"
 
 
 # Functions
@@ -18,6 +18,7 @@ install_requirements() {
   apt install --yes --no-install-recommends \
     ca-certificates \
     curl \
+    jq \
     unzip
 }
 
@@ -28,30 +29,38 @@ initialize_tempdir() {
 }
 
 download() {
-  if [ "$DOTNET" == "true" ]; then
-    suffix="stable_mono_linux_"
+  if [ "$VERSION" == "latest" ]; then
+    urlSuffix="latest"
   else
-    suffix="stable_linux."
+    urlSuffix="tags/$VERSION-stable"
   fi
 
-  url="https://github.com/godotengine/godot/releases/download/$VERSION-stable/Godot_v$VERSION-$suffix$(uname -m).zip"
-  curl -fsSL -o "$fileName" "$url"
+  if [ "$DOTNET" == "true" ]; then
+    build="stable_mono_linux"
+  else
+    build="stable_linux"
+  fi
+
+  curl -s "https://api.github.com/repos/$repo/releases/$urlSuffix" |
+    jq --raw-output --arg ARCH "$(uname -m)" --arg BUILD "$build" \
+    '.assets[] | select(.name | contains($BUILD) and contains($ARCH)) | .browser_download_url' |
+    xargs curl -fsSL -o FILE
 
   if [ "$HASH" != "none" ]; then
-    echo "$HASH $fileName" | sha256sum --check
+    echo "$HASH FILE" | sha256sum --check
   fi
 }
 
 install_feature() {
-  unzip "$fileName"
+  unzip FILE
 
   if [ "$DOTNET" == "true" ]; then
-    mv "Godot_v$VERSION-stable_mono_linux_$(uname -m)" /usr/local/godot
-    mv "/usr/local/godot/Godot_v$VERSION-stable_mono_linux.$(uname -m)" /usr/local/godot/godot
+    find . -type d -name "Godot_*" -exec cp -r {} /usr/local/godot \;
+    find /usr/local/godot -type f -name "Godot_*$(uname -m)" -exec mv {} /usr/local/godot/godot \;
     chmod +x /usr/local/godot/godot
     ln -s /usr/local/godot/godot /usr/local/bin/godot
   else
-    install "Godot_v$VERSION-stable_linux.$(uname -m)" /usr/local/bin/godot
+    find . -type f -name "Godot_*$(uname -m)" -exec install {} /usr/local/bin/godot \;
   fi
 }
 

@@ -3,6 +3,7 @@
         "image": "mcr.microsoft.com/devcontainers/base:bookworm",
         "features": {
             "godot": {
+                "version": "4.2.2",
                 "dotnet": true
             }
         }
