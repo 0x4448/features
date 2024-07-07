@@ -45,7 +45,7 @@ download() {
 
 install_feature() {
   tar xf FILE
-  install "$(find . -type f -name shellcheck)" /usr/local/bin/shellcheck
+  find . -type f -name shellcheck -exec install {} /usr/local/bin/shellcheck \;
 }
 
 

@@ -46,7 +46,7 @@ download() {
 
 install_feature() {
   tar xf FILE
-  install "$(find . -type f -name git-lfs)" /usr/local/bin/git-lfs
+  find . -type f -name git-lfs -exec install {} /usr/local/bin/git-lfs \;
 }
 
 
