@@ -3,12 +3,12 @@ set -eu
 
 
 # Feature Options
-VERSION=${VERSION:-"v2.12.0"}
-HASH=${HASH:-"56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010"}
+VERSION=${VERSION:-"latest"}
+HASH=${HASH:-"none"}
 
 
 # Script Variables
-fileName="hadolint"
+repo="hadolint/hadolint"
 
 
 # Functions
@@ -16,7 +16,8 @@ install_requirements() {
   apt update
   apt install --yes --no-install-recommends \
     ca-certificates \
-    curl
+    curl \
+    jq
 }
 
 initialize_tempdir() {
@@ -26,15 +27,24 @@ initialize_tempdir() {
 }
 
 download() {
-  url="https://github.com/hadolint/hadolint/releases/download/$VERSION/hadolint-Linux-$(uname -m)"
-  curl -fsSL -o "$fileName" "$url"
+  if [ "$VERSION" == "latest" ]; then
+    urlSuffix="latest"
+  else
+    urlSuffix="tags/$VERSION"
+  fi
+
+  curl -s "https://api.github.com/repos/$repo/releases/$urlSuffix" |
+    jq --raw-output --arg ARCH "$(uname -m)" \
+    '.assets[] | select(.name | contains("Linux") and contains($ARCH) and (contains("sha256") | not)) | .browser_download_url' |
+    xargs curl -fsSL -o FILE
+
   if [ "$HASH" != "none" ]; then
-    echo "$HASH $fileName" | sha256sum --check
+    echo "$HASH FILE" | sha256sum --check
   fi
 }
 
 install_feature() {
-  install "$fileName" /usr/local/bin/hadolint
+  install FILE /usr/local/bin/hadolint
 }
 
 

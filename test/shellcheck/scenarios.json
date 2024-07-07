@@ -1,0 +1,11 @@
+{
+    "install_exact_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+        "features": {
+            "shellcheck": {
+                "version": "v0.10.0",
+                "hash": "6c881ab0698e4e6ea235245f22832860544f17ba386442fe7e9d629f8cbedf87"
+            }
+        }
+    }
+}

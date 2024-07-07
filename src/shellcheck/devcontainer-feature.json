@@ -7,7 +7,7 @@
         "version": {
             "type": "string",
             "description": "version to install",
-            "default": "stable"
+            "default": "latest"
         },
         "hash": {
             "type": "string",

@@ -1,6 +1,18 @@
 {
     "name": "Hadolint",
     "id": "hadolint",
-    "version": "2.12.0",
-    "description": "Dockerfile linter, validate inline bash, written in Haskell"
+    "version": "1.0.0",
+    "description": "Dockerfile linter, validate inline bash, written in Haskell",
+    "options": {
+        "version": {
+            "type": "string",
+            "description": "version to install",
+            "default": "latest"
+        },
+        "hash": {
+            "type": "string",
+            "description": "SHA256 hash of package",
+            "default": "none"
+        }
+    }
 }
