@@ -3,13 +3,12 @@ set -eu
 
 
 # Feature Options
-VERSION=${VERSION:-"stable"}
+VERSION=${VERSION:-"latest"}
 HASH=${HASH:-"none"}
 
 
 # Script Variables
-fileName="shellcheck.tar.xz"
-
+repo="koalaman/shellcheck"
 
 # Functions
 install_requirements() {
@@ -17,6 +16,7 @@ install_requirements() {
   apt install --yes --no-install-recommends \
     ca-certificates \
     curl \
+    jq \
     xz-utils
 }
 
@@ -27,16 +27,25 @@ initialize_tempdir() {
 }
 
 download() {
-  url="https://github.com/koalaman/shellcheck/releases/download/$VERSION/shellcheck-$VERSION.linux.$(uname -m).tar.xz"
-  curl -fsSL -o "$fileName" "$url"
+  if [ "$VERSION" == "latest" ]; then
+    urlSuffix="latest"
+  else
+    urlSuffix="tags/$VERSION"
+  fi
+
+  curl -s "https://api.github.com/repos/$repo/releases/$urlSuffix" |
+    jq --raw-output --arg ARCH "$(uname -m)" \
+    '.assets[] | select(.name | contains("linux") and contains($ARCH)) | .browser_download_url' |
+    xargs curl -fsSL -o FILE
+
   if [ "$HASH" != "none" ]; then
-    echo "$HASH $fileName" | sha256sum --check
+    echo "$HASH FILE" | sha256sum --check
   fi
 }
 
 install_feature() {
-  tar xf "$fileName"
-  install "shellcheck-$VERSION/shellcheck" /usr/local/bin/shellcheck
+  tar xf FILE
+  find . -type f -name shellcheck -exec install {} /usr/local/bin/shellcheck \;
 }
 
 
