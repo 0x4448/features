@@ -12,15 +12,6 @@ repo="git-lfs/git-lfs"
 
 
 # Functions
-install_requirements() {
-  apt update
-  apt install --yes --no-install-recommends \
-    ca-certificates \
-    curl \
-    git \
-    jq
-}
-
 initialize_tempdir() {
   tempDir=$(mktemp -d)
   cd "$tempDir" || exit 1
@@ -51,7 +42,6 @@ install_feature() {
 
 
 # Main
-install_requirements
 initialize_tempdir
 download
 install_feature

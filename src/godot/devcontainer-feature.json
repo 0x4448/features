@@ -1,7 +1,7 @@
 {
     "name": "Godot Engine",
     "id": "godot",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Godot Engine - Multi-platform 2D and 3D game engine",
     "options": {
         "version": {
@@ -19,6 +19,9 @@
             "description": "SHA256 hash of package",
             "default": "none"
         }
+    },
+    "dependsOn": {
+        "ghcr.io/0x4448/features/common-utils:1": {}
     },
     "installsAfter": [
         "ghcr.io/devcontainers/features/dotnet"
