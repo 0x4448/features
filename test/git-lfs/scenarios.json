@@ -1,0 +1,11 @@
+{
+    "install_exact_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+        "features": {
+            "git-lfs": {
+                "version": "v3.5.1",
+                "hash": "6f28eb19faa7a968882dca190d92adc82493378b933958d67ceaeb9ebe4d731e"
+            }
+        }
+    }
+}

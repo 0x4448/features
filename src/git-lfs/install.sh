@@ -3,12 +3,12 @@ set -eu
 
 
 # Feature Options
-VERSION=${VERSION:-"3.5.1"}
-HASH=${HASH:-"6f28eb19faa7a968882dca190d92adc82493378b933958d67ceaeb9ebe4d731e"}
+VERSION=${VERSION:-"latest"}
+HASH=${HASH:-"none"}
 
 
 # Script Variables
-fileName="git-lfs.tar.gz"
+repo="git-lfs/git-lfs"
 
 
 # Functions
@@ -17,7 +17,8 @@ install_requirements() {
   apt install --yes --no-install-recommends \
     ca-certificates \
     curl \
-    git
+    git \
+    jq
 }
 
 initialize_tempdir() {
@@ -27,16 +28,25 @@ initialize_tempdir() {
 }
 
 download() {
-  url="https://github.com/git-lfs/git-lfs/releases/download/v$VERSION/git-lfs-linux-amd64-v$VERSION.tar.gz"
-  curl -fsSL -o "$fileName" "$url"
+  if [ "$VERSION" == "latest" ]; then
+    urlSuffix="latest"
+  else
+    urlSuffix="tags/$VERSION"
+  fi
+
+  curl -s "https://api.github.com/repos/$repo/releases/$urlSuffix" |
+    jq --raw-output \
+    '.assets[] | select(.name | contains("linux") and contains("amd64")) | .browser_download_url' |
+    xargs curl -fsSL -o FILE
+
   if [ "$HASH" != "none" ]; then
-    echo "$HASH $fileName" | sha256sum --check
+    echo "$HASH FILE" | sha256sum --check
   fi
 }
 
 install_feature() {
-  tar xf "$fileName"
-  install "git-lfs-$VERSION/git-lfs" /usr/local/bin/git-lfs
+  tar xf FILE
+  install "$(find . -type f -name git-lfs)" /usr/local/bin/git-lfs
 }
 
 
