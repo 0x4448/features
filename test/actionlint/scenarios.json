@@ -1,0 +1,11 @@
+{
+    "install_exact_version": {
+        "image": "mcr.microsoft.com/devcontainers/base:bookworm",
+        "features": {
+            "actionlint": {
+                "version": "v1.7.1",
+                "hash": "f53c34493657dfea83b657e4b62cc68c25fbc383dff64c8d581613b037aacaa3"
+            }
+        }
+    }
+}

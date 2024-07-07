@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         features:
+          - actionlint
           - git-lfs
           - godot
           - hadolint

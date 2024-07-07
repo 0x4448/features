@@ -1,0 +1,21 @@
+{
+    "name": "actionlint",
+    "id": "actionlint",
+    "version": "1.0.0",
+    "description": "Static checker for GitHub Actions workflow files",
+    "options": {
+        "version": {
+            "type": "string",
+            "description": "version to install",
+            "default": "latest"
+        },
+        "hash": {
+            "type": "string",
+            "description": "SHA256 hash of package",
+            "default": "none"
+        }
+    },
+    "dependsOn": {
+        "ghcr.io/0x4448/features/common-utils:1": {}
+    }
+}
