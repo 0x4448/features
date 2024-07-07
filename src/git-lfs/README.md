@@ -7,11 +7,16 @@ Git extension for versioning large files
 
 ```json
 "features": {
-    "ghcr.io/0x4448/features/git-lfs:3": {}
+    "ghcr.io/0x4448/features/git-lfs:1": {}
 }
 ```
 
+## Options
 
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+| version | version to install | string | latest |
+| hash | SHA256 hash of package | string | none |
 
 
 

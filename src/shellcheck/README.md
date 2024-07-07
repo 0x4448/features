@@ -15,7 +15,7 @@ A shell script static analysis tool
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| version | version to install | string | stable |
+| version | version to install | string | latest |
 | hash | SHA256 hash of package | string | none |
 
 

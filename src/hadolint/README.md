@@ -7,11 +7,16 @@ Dockerfile linter, validate inline bash, written in Haskell
 
 ```json
 "features": {
-    "ghcr.io/0x4448/features/hadolint:2": {}
+    "ghcr.io/0x4448/features/hadolint:1": {}
 }
 ```
 
+## Options
 
+| Options Id | Description | Type | Default Value |
+|-----|-----|-----|-----|
+| version | version to install | string | latest |
+| hash | SHA256 hash of package | string | none |
 
 
 
