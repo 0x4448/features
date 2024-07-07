@@ -1,0 +1,6 @@
+{
+    "name": "Common Utilities",
+    "id": "common-utils",
+    "version": "1.0.0",
+    "description": "Common system utilities used by other features in this repository"
+}
