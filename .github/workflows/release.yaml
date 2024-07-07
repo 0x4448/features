@@ -24,12 +24,3 @@ jobs:
           base-path-to-features: "./src"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  docs:
-    if: ${{ github.ref == 'refs/heads/main' }}
-
-    permissions:
-      contents: write
-      pull-requests: write
-
-    uses: ./.github/workflows/docs.yaml
